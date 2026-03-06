@@ -1,0 +1,138 @@
+.o-progressChart {
+	background-image: linear-gradient($xtra-dark, $dark);
+	width: 100%;
+	height: 320px;
+	margin-bottom: 42px;
+	margin-top: 135px;
+	
+	@include breakpoint(sm) {
+		margin-bottom: 27px;
+		margin-top: 0;
+	}
+}
+
+.o-progressChart__wrapper {
+	width: 100%;
+	height: 360px;
+	overflow: scroll;
+}
+
+#progressChart {
+	width: 100%;
+	min-width: 1024px;
+	height: 350px;
+}
+
+.o-line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.o-line--mobility {
+  stroke: $violet;
+}
+
+.o-line--activity {
+  stroke: $plum;
+}
+
+.o-line--appetite {
+  stroke: $cyan;
+}
+
+.o-line--pain {
+  stroke: $fuscia;
+}
+
+.o-line--stress {
+  stroke: $orange;
+}
+
+.o-axis--x {
+	text {
+		font-family: $mon;
+		font-weight: 500;
+		font-size: 10px;
+		fill: $black-75;
+	}
+	
+	path {
+		stroke: $sand;
+		shape-rendering: crispEdges;
+	}
+	
+	line {
+		stroke: $sand;
+		shape-rendering: crispEdges;
+	}
+	
+	.domain {
+		stroke: none;
+		fill: none;
+	}
+	
+	.tick {
+		stroke: $sand;
+		stroke-opacity: 0.15;
+		opacity: 0.15;
+	}
+}
+
+.o-axis--y {
+	text {
+		font-family: $mon;
+		font-weight: 500;
+		font-size: 10px;
+		fill: white;
+	}
+	
+	path {
+		stroke: none;
+	}
+	
+	line {
+		stroke: none;
+	}
+	
+	.domain {
+		stroke: none;
+		fill: none;
+	}
+}
+
+.o-overlay {
+  fill: none;
+  // fill: rgba(252,21,123,0.25);
+  pointer-events: all;
+}
+
+.o-focus {
+	stroke: none;
+	
+	text {
+		fill: $white;
+		font-size: 8px;
+		font-weight: 700;
+		text-anchor: middle;
+	}
+}
+
+.o-focus--mobility {
+  fill: $violet;
+}
+
+.o-focus--activity {
+  fill: $plum;
+}
+
+.o-focus--appetite {
+  fill: $cyan;
+}
+
+.o-focus--pain {
+  fill: $fuscia;
+}
+
+.o-focus--stress {
+  fill: $orange;
+}

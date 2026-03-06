@@ -1,0 +1,395 @@
+.o-progressCalendar {
+	background: $sand-35;
+	position: relative;
+}
+
+.o-progressCalendar__card {
+	position: relative;
+	background: $white;
+	border-bottom: 1px solid $dark-50;
+	overflow: hidden;
+	transition: all 0.25s ease-in;
+	transform: translateY(0);
+	min-height: 560px;
+	
+	
+	@include breakpoint(sm) {
+		border-bottom: none;
+		border-right: 1px solid $dark-50;
+		min-height: 0;
+	}
+	
+	.o-progressCalendar__card--inner {
+		height: 100%;
+		padding: 15px;
+		padding-top: 0;
+		transition: all 0.25s ease-in;
+		transform: translateX(0);
+		
+		&.shift {	
+			transform: translateX(-100%);
+		}
+	}
+	
+	&.slideUp {
+		transform: translateY(-15px);
+	}
+	
+	.o-progressCalendar__card--actions {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		padding: 15px;
+		transition: all 0.25s ease-in;
+		transform: translateX(0);
+		
+		&.shift {	
+			transform: translateX(-100%);
+		}
+		
+		.o-actions--edit {
+			position: absolute;
+			top: 0; // offset
+			left: 0;
+			width: 100%;
+			padding: 15px;
+			transition: all 0.25s ease-in-out;
+			transform: translateX(100%);
+		}
+	}
+	
+	.o-date {
+		padding-left: 15px;
+		padding-top: 30px;
+		position: relative;
+		
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 65px;
+			height: 4px;
+			background-color: $green;
+			transform: scale(0,1);
+			transform-origin: left;
+			transition: all 0.25s ease-in-out;
+		}
+		
+		@include breakpoint(sm) {
+			padding-top: 15px;
+		}
+	}
+	
+	.o-date__month {
+		font-weight: 500;
+		font-size: 13px;
+		letter-spacing: 0.02em;
+		margin-bottom: -2px;
+	}
+	
+	.o-date__date {
+		margin-bottom: -4px;
+		font-weight: 300;
+		font-size: 42px;
+		letter-spacing: -0.03em;
+		line-height: 1em;
+	}
+	
+	.o-date__year {
+		font-weight: 500;
+		font-size: 11px;
+		text-transform: uppercase;
+	}
+	
+	.o-attributes__item {
+		position: relative;
+		padding-left: 0;
+		cursor: default;
+		@include m-b-($spacer-xxs);
+		
+		.heading--xs {
+			position: relative;
+			
+			span.score {
+				position: relative;
+				left: -12px;
+				z-index: 1;
+				overflow: hidden;
+				transition: all 0.25s ease-in-out;
+				
+				span {
+					display: inline-block;
+					position: relative;
+					left: -4px;
+					width: 14px;
+					opacity: 0;
+					color: $white;
+					text-align: right;
+					transition: all 0.25s ease-in-out;
+				}
+			}
+			
+			&::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				bottom: -2px;
+				width: 150%;
+				height: 20px;
+				transform: scaleY(0);
+				transform-origin: bottom;
+				transition: all 0.25s ease-in-out;
+			}
+			
+			&.mobility::before {
+				background: $violet;
+			}
+			
+			&.activity::before {
+				background: $plum;
+			}
+			
+			&.appetite::before {
+				background: $cyan;
+			}
+			
+			&.pain::before {
+				background: $fuscia;
+			}
+			
+			&.stress::before {
+				background: $orange;
+			}
+		}
+		
+		.o-attributeGraph {
+			position: absolute;
+			top: 17px;
+			left: 0;
+			border-bottom-width: 2px;
+			border-bottom-style: solid;
+			transition: all 0.25s ease-in-out;
+		
+			&.mobility {
+				border-bottom-color: $violet;
+			}
+			
+			&.activity {
+				border-bottom-color: $plum;
+			}
+			
+			&.appetite {
+				border-bottom-color: $cyan;
+			}
+			
+			&.pain {
+				border-bottom-color: $fuscia;
+			}
+			
+			&.stress {
+				border-bottom-color: $orange;
+			}
+		}
+		
+		&::before {
+			content: "";
+			position: absolute;
+			top: 17px;
+			left: 0;
+			width: 100%;
+			border-bottom: 2px solid $sand-35;
+		}
+		
+		&:hover {
+			.heading--xs {
+				
+				&::before {
+					transform: scaleY(1);
+				}
+				
+				span.score {
+					left: 5px;
+					color: $white;
+					
+					span {
+						opacity: 1;
+						letter-spacing: -0.05em;
+					}
+				}
+			}
+		}
+	}
+	
+	.o-dataEntries--edit {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		padding: 15px;
+		transition: all 0.25s ease-in-out;
+		transform: translateX(100%);
+		
+		form {
+			width: 100%;
+			margin: 0 auto;
+		}
+	}
+}
+
+.o-progressCalendar__card {
+	.o-progressCalendar__card--actions {
+		.o-actions--edit {
+			div {
+				width: 100%;
+				max-width: 225px;
+				margin: 0 auto;
+				
+				@include breakpoint(sm) {
+					max-width: 300px;
+				}
+			}
+		}
+	}
+}
+
+.o-progressCalendar__card.addNew {
+	flex-shrink: 1;
+}
+
+.o-progressCalendar__card--newEntry {
+	background-image: url("../images/bg.jpg");
+	background-position: center center;
+	background-size: cover;
+	position: relative;
+	border-bottom: none;
+	
+	.o-progressCalendar__card--wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	.o-progressCalendar__card--inner {
+		padding-top: 15px;
+	}
+	
+	.o-dataEntries--display {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		border: 4px solid white;
+	}
+	
+	.o-dataEntries--edit {
+		background: white;
+	}
+}
+
+.o-field {
+	padding: 4px 8px;
+	position: relative;
+	
+	&::after {
+		content: "";
+		position: absolute;
+		top: -10px;
+		left: 0;
+		height: 100%;
+		border-left-width: 2px;
+		border-left-style: solid;
+		cursor: default;
+		transform: scale(1, 0.2);
+		transform-origin: center;
+		transition: all 0.25s ease-in-out;
+	}
+	
+	&:hover::after {
+		top: 0;
+		transform: scale(1, 1);
+	}
+	
+	&:nth-child(even) {
+		background: $sand-35;
+	}
+	
+	&.o-field--mobility::after {
+		border-left-color: $violet;
+	}
+	
+	&.o-field--activity::after {
+		border-left-color: $plum;
+	}
+	
+	&.o-field--appetite::after {
+		border-left-color: $cyan;
+	}
+	
+	&.o-field--pain::after {
+		border-left-color: $fuscia;
+	}
+	
+	&.o-field--stress::after {
+		border-left-color: $orange;
+	}
+}
+
+.o-field--date {
+	margin-top: 7px;
+	margin-bottom: 6px;
+	
+	input {
+		background: none;
+		border: none;
+		border-bottom: 1px solid $sand;
+		font-size: 16px;
+		letter-spacing: -0.03em;
+	}
+}
+
+label {
+	display: block;
+	width: 100%;
+	
+	span {
+		width: 100%;
+		
+		em {
+			font-style: normal;
+			float: right;
+		}
+	}
+}
+
+input {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: $mon !important;
+	font-size: 12px;
+}
+
+textarea {
+	width: 100%;
+	height: 9em;
+	padding: 5px;
+	border: 1px solid $sand;
+	font-family: $mon !important;
+	font-size: 12px;
+}
+
+.loggedIn{
+	.o-dataEntries--display {
+		padding-bottom: 60px;
+	}
+}
+
+// Active state
+.o-progressCalendar__card.focus {
+	.o-date::before {
+		transform: scale(1,1);
+	}
+}

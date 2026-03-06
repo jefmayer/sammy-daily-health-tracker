@@ -1,0 +1,50 @@
+.u-inline-block {
+  display: inline-block;
+}
+
+.u-inline {
+	display: inline;
+}
+
+.u-clear {
+	clear: both;
+}
+
+.u-hidden {
+	display: none;
+}
+
+.u-pad--none {
+	padding: 0;
+}
+
+.u-disableAllTransforms {
+	transform: none !important;
+}
+
+.clearfix::after {
+    content:" ";
+    display:table;
+    clear:both;
+}
+
+.hidden {
+	display: none;
+}
+
+.u-overflow-x--hidden {
+	overflow-x: hidden;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+.clearfix::before, .clearfix::after {
+	content: "";
+	display: table;
+}
+
+.clearfix::after {
+	clear: both;
+}

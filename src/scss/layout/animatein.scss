@@ -1,0 +1,70 @@
+#app {
+	@include breakpoint(sm) {
+		// Defaults
+		header {
+			overflow: hidden;
+			height: 0;
+			transition: all .5s ease-out;
+		}
+		
+		.o-progressChart {
+			height: 0;
+			transition: height .75s cubic-bezier(.87,-.41,.19,1.44);
+		}
+		
+		#progressChart {
+			opacity: 0;
+			transition: all 0.35s ease-in 0.5s;
+		}
+		
+		.o-titleBar__heading,
+		.o-titleBar__acctOptions {
+			opacity: 0;
+			transition: all 0.15s ease-in 0.75s;
+		}
+		
+		.o-progressCalendar {
+			opacity: 0;
+			height: 0;
+			overflow: hidden;
+			transform: translateY(10px);
+			transition: opacity 0.35s ease-in-out 0.5s, transform 0.35s ease-in-out 0.5s;
+		}
+		
+		footer {
+			transition: all 0.35s ease-in 0.75s;
+		}
+	}
+}
+
+// Animations
+#app.animateIn {
+	@include breakpoint(sm) {
+		header {
+			height: 135px;
+		}
+		
+		.o-progressChart {
+			height: 320px;
+		}
+		
+		#progressChart {
+			opacity: 1;
+		}
+		
+		.o-titleBar__heading,
+		.o-titleBar__acctOptions {
+			opacity: 1;
+		}
+		
+		.o-progressCalendar {
+			height: auto;
+			opacity: 1;
+			transform: translateY(0);
+		}
+		
+		footer {
+			opacity: 1;
+		}
+	}
+}

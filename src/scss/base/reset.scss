@@ -1,0 +1,62 @@
+* {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
+.no-js *:focus,
+.keyboard-focus *:focus {
+  outline: rgba(59, 153, 252, 1) auto 3px;
+}
+
+body {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: $dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: $mon;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  
+  &::before { content: none; }
+}
+
+a {
+
+  &:visited {
+  	text-decoration: none;
+  }
+  
+  &:hover {
+  	text-decoration: none;
+  }
+  
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+hr {
+	margin: 0;
+	border: none;
+}

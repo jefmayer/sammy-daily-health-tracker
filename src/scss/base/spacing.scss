@@ -1,0 +1,158 @@
+// Recommended use examples
+// - Create space between components and sections
+// - Create space within components between objects
+// - Create space between type elements
+
+// Optional use examples
+// - One of a kind components, such as header or navigation
+
+// Use something else examples
+// - Cinching heading or text elements to control rags. Use cinch utility classes instead
+
+$spacer-none: 0;
+$spacer-tiny: -20px;
+$spacer-xxxs: 5px;
+$spacer-xxs: 10px;
+$spacer-xs: 20px;
+$spacer-sm: 30px;
+$spacer-md: 40px;
+$spacer-lg: 60px;
+$spacer-xl: 86px;
+
+$sizes: (
+  none: $spacer-none,
+  tiny: $spacer-tiny,
+  xxs: $spacer-xxs,
+  xs: $spacer-xs,
+  sm: $spacer-sm,
+  md: $spacer-md,
+  lg: $spacer-lg,
+  xl: $spacer-xl
+);
+
+// Scale down for mobile
+$mobile-scale: .75;
+
+// Margin
+// outputs .m-t-none, .m-t-xxs, .m-t-xs, .m-t-sm, .m-t-md, .m-t-lg, .m-t-xl, .m-t-xxl ETC
+@each $size, $value in $sizes {
+  .m-t-#{$size} {
+    margin-top: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      margin-top: $value;
+    }
+  }
+  .m-b-#{$size} {
+    margin-bottom: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      margin-bottom: $value;
+    }
+  }
+  .m-l-#{$size} {
+    margin-left: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      margin-left: $value;
+    }
+  }
+  .m-r-#{$size} {
+    margin-right: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      margin-right: $value;
+    }
+  }
+}
+
+// Padding
+@each $size, $value in $sizes {
+  .p-t-#{$size} {
+    padding-top: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      padding-top: $value;
+    }
+  }
+  .p-b-#{$size} {
+    padding-bottom: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      padding-bottom: $value;
+    }
+  }
+  .p-l-#{$size} {
+    padding-left: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      padding-left: $value;
+    }
+  }
+  .p-r-#{$size} {
+    padding-right: $value * $mobile-scale;
+    @include breakpoint(sm) {
+      padding-right: $value;
+    }
+  }
+}
+
+// Mixins for the spacers.
+// usage: @include m-t-($spacer-md);
+@mixin m-t-($value) {
+  margin-top: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    margin-top: $value;
+  }
+}
+@mixin m-b-($value) {
+  margin-bottom: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    margin-bottom: $value;
+  }
+}
+@mixin m-l-($value) {
+  margin-left: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    margin-left: $value;
+  }
+}
+@mixin m-r-($value) {
+  margin-right: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    margin-right: $value;
+  }
+}
+
+@mixin p-t-($value) {
+  padding-top: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    padding-top: $value;
+  }
+}
+@mixin p-b-($value) {
+  padding-bottom: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    padding-bottom: $value;
+  }
+}
+
+@mixin p-l-($value) {
+  padding-left: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    padding-left: $value;
+  }
+}
+@mixin p-r-($value) {
+  padding-right: $value * $mobile-scale;
+  @include breakpoint(sm) {
+    padding-right: $value;
+  }
+}
+
+// float
+
+.float-right {
+	float: right
+}
+
+.float-left {
+	float: left;
+}
+
+.clear-both {
+	clear: both;
+}

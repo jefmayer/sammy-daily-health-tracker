@@ -1,0 +1,48 @@
+{
+  "name": "sammy-daily-health-trackerr",
+  "version": "1.0.0",
+  "author": "Jef Mayer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch"
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.7",
+    "@babel/eslint-parser": "^7.26.5",
+    "@babel/preset-env": "^7.26.7",
+    "ajv": "^8.17.1",
+    "autoprefixer": "^10.4.20",
+    "babel-loader": "^9.2.1",
+    "body-parser": "^1.20.2",
+    "co": "4.6.0",
+    "css-loader": "^7.1.2",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.10",
+    "eslint": "^9.19.0",
+    "eslint-webpack-plugin": "^4.2.0",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "mini-css-extract-plugin": "^2.9.2",
+    "mongodb": "^3.7.4",
+    "postcss": "^8.5.1",
+    "postcss-loader": "^8.1.1",
+    "sass": "^1.83.4",
+    "sass-loader": "^16.0.4",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "stylelint-webpack-plugin": "^5.0.1",
+    "terser-webpack-plugin": "^5.3.11",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "18.18.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jefmayer/sammy-daily-health-tracker"
+  }
+}

@@ -1,0 +1,114 @@
+.o-loginOverlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	
+	.o-loginOverlay__bg {
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		background: $dark-95;
+		opacity: 0;
+		transition: all 0.25s ease-in;
+		transition-delay: 0.15s;
+
+		@include breakpoint(sm) {
+			position: absolute;
+		}
+	}
+	
+	.o-loginOverlay__inner {
+		position: fixed;
+		left: 50%;
+		top: 150px;
+		z-index: 2;
+		width: 80%;
+		max-width: 440px;
+		opacity: 0;
+		transform: translateX(-50%) translateY(10px);
+		transition: all 0.25s ease-in;
+		transition-delay: 0s;
+
+		@include breakpoint(sm) {
+			position: absolute;
+			top: 15px;
+		}
+		
+		.body--intro {
+			color: $sand;
+			
+			p {
+				margin-bottom: 0.75em;
+			}
+			
+				&.error {
+					color: $vermilion;
+					font-size: 1em;
+					font-weight: 400;
+				}
+		}
+		
+		.o-btn--primary {
+			border-color: $green;
+			background: transparent;
+			color: $white;
+		}
+		
+		.o-loginErrorMsg {
+			transform: translateY(10px);
+			opacity: 0;
+			transition: all 0.25s ease-in;
+			
+			&.display {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		
+		.o-field__settings {
+			width: 100%;
+			max-width: 250px;
+			
+			input {
+				background: none;
+				border: none;
+				border-bottom: 1px $sand-50 solid;
+				font-weight: 300;
+				font-size: 16px;
+				color: $sand;
+				transition: all 0.25s ease-in;
+			}
+			
+			input::placeholder,
+			input::-webkit-input-placeholder,
+			input::-moz-placeholder,
+			input:-ms-input-placeholder,
+			input:-moz-placeholder {
+				color: $sand;
+				opacity: 1;
+			}
+			
+			&.error input {
+				border-color: $vermilion;
+			}
+		}
+	}
+}
+
+.o-loginOverlay.animateIn {
+	.o-loginOverlay__bg {
+		opacity: 1;
+		transition-delay: 0s;
+	}
+	
+	.o-loginOverlay__inner {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+		transition-delay: 0.15s;
+	}
+}

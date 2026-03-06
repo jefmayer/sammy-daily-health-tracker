@@ -1,0 +1,81 @@
+button {
+	padding: 10px 0;
+	overflow: hidden;
+	font-size: 80%;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	color: $dark;
+	text-transform: uppercase;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.25s ease-in-out;
+	
+	@include breakpoint(sm) {
+		padding: 5px 0;
+	}
+}
+
+button.o-btn--simple {
+	border: none;
+	background: none;
+	
+	
+	&:hover {
+		color: $green;
+	}
+	
+	&:active {
+		transform: scale(0.95,0.95);
+	}
+}
+
+button.o-btn--primary {
+	position:relative;
+	width: 100%;
+	max-width: 150px;
+	border: 2px $dark solid;
+	background: white;
+	transform: scale(1,1);
+	transform-origin: center;
+	
+	span {
+		position: relative;
+		z-index: 2;
+	}
+	
+	&::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: -50%;
+		margin-top: -150px;
+		z-index: 1;
+		width: 300px;
+		height: 300px;
+		border-radius: 300px;
+		background: white;
+		transition: all 0.25s ease-in-out;
+		transform: scale(0,0);
+		transform-origin: center;
+	}
+	
+	&:hover {
+		color: white;
+		border-color: $green;
+		transform: scale(1.05,1.05);
+	}
+	
+	&:active {
+		transform: scale(1,1);
+	}
+	
+	&:hover::before {
+		transform: scale(1,1);
+		background: $green;
+	}
+}
+
+.o-btn--addNew {
+	display: block;
+	margin: 0 auto;
+}

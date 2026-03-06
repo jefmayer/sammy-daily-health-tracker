@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sammy&rsquo;s Daily Health Tracker</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="theme-color" content="#1f2330" />
+		<link href="https://fonts.googleapis.com/css?family=Heebo:300,400,500,700,900" rel="stylesheet">
+		<link href="/styles/app.min.css" rel="stylesheet">
+		<link rel="shortcut icon" href="favicon.ico" />
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+	</head>
+	
+	<body>
+		<main id="app" :class="{ 'animateIn': dataLoaded, 'loggedIn': isLoggedIn }">
+			
+			<header>
+				<div class="o-logo"></div>
+				<div class="o-btn--menu" :class="{ 'closeState': toggleMenuButton }" v-on:click="displaySettings">	
+					<span class="o-menuBar"></span>
+					<span class="o-menuBar"></span>
+					<span class="o-menuBar"></span>
+					<div>
+						<span class="o-closeBar"></span>
+						<span class="o-closeBar"></span>
+					</div>
+				</div>
+			</header>
+			<div class="o-container">
+				<chart ref="progressChart" :data-loaded="dataLoaded" :slide-carousel-to-date="slideCarouselToDate" inline-template>
+					<div class="o-progressChart">
+						<div class="o-progressChart__wrapper">
+							<svg id="progressChart"></svg>
+						</div>
+					</div>
+				</chart>
+				
+				<div class="o-progressCalendar">
+					<carousel ref="carousel" :navigation-enabled="true"  :pagination-enabled="false" :scroll-per-page="true" :per-page=0 :per-page-custom=[[550,2],[960,3],[1150,4],[1400,5]]>
+						<slide v-if="isLoggedIn" class="o-progressCalendar__card o-progressCalendar__card--newEntry">
+							<record :item="newRecord" :update="update" :pause="pause" :restart="restart" :add-new="true" :is-logged-in="isLoggedIn" inline-template>
+								<div class="o-progressCalendar__card--wrapper">
+									<div class="o-progressCalendar__card--inner" :class="{ 'shift': canEdit }">
+										<div class="o-dataEntries--display">
+											<button class="o-btn--primary o-btn--addNew" v-on:click="editHandler">
+												<span>New Record</span>
+											</button>
+										</div>
+										<div class="o-dataEntries--edit">
+											<form>
+												<label for="newEntryDate" class="o-field--date">
+													<span class="heading--xs">Date</span>
+													<input name="date" id="newEntryDate" type="date" min="2018-10-10" v-model="item.date" />
+												</label>
+												<label for="newEntryActivity" class="o-field o-field--activity">
+													<span class="heading--xs">Activity <em>{{ item.activity }}</em></span>
+													<input name="activity" id="newEntryActivity" type="range" min="0" max="10" v-model="item.activity" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label for="newEntryMobility" class="o-field o-field--mobility">
+													<span class="heading--xs">Mobility <em>{{ item.mobility }}</em></span>
+													<input name="mobility" id="newEntryMobility" type="range" min="0" max="10" v-model="item.mobility" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label for="newEntryAppetite" class="o-field o-field--appetite">
+													<span class="heading--xs">Appetite <em>{{ item.appetite }}</em></span>
+													<input name="appetite" id="newEntryAppetite" type="range" min="0" max="10" v-model="item.appetite" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label for="newEntryStress" class="o-field o-field--stress">
+													<span class="heading--xs">Stress <em>{{ item.stress }}</em></span>
+													<input name="stress" id="newEntryStress" type="range" min="0" max="10" v-model="item.stress" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label for="newEntryPain" class="o-field o-field--pain">
+													<span class="heading--xs">Pain <em>{{ item.pain }}</em></span>
+													<input name="pain" id="newEntryPain" type="range" min="0" max="10" v-model="item.pain" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label for="newEntryNotes">
+													<span class="heading--xs">Notes</span>
+													<textarea name="notes" id="newEntryNotes" v-model="item.notes" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd"></textarea>
+												</label>
+											</form>
+										</div>
+									</div>
+									<div class="o-progressCalendar__card--actions" :class="{ 'shift': canEdit }">
+										<div class="o-actions--display" style="height: 25px;"></div>
+										<div class="o-actions--edit">
+											<div>
+												<button class="o-btn--primary" v-on:click="updateHandler">
+													<span>Add Record</span>
+												</button>
+												<button class="o-btn--simple m-l-xs" v-on:click="editHandler">
+													<span>&times; Cancel</span>
+												</button>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</record>
+						</slide>
+						<slide v-for="(item, index) in datapoints" :key="index" class="o-progressCalendar__card":data-date="item.date" :class="{ 'focus': focusDate == item.date }">
+							<record :item="item" :update="update" :pause="pause" :restart="restart" :add-new="false" :is-logged-in="isLoggedIn" :index="index" inline-template>
+								<div>
+									<div class="o-date">
+										<div class="o-date__month">{{ getDisplayMonth(item.date) }}</div>
+										<div class="o-date__date">{{ getDisplayDate(item.date) }}</div>
+										<div class="o-date__year">{{ getDisplayYear(item.date) }}</div>
+									</div>
+									<div class="o-progressCalendar__card--inner" :class="{ 'shift': canEdit }">
+										<div class="o-dataEntries--display">
+											<div class="o-attributes m-t-xxs m-b-xs">
+												<div class="o-attributes__item">
+													<span class="heading--xs activity"><span class="score"><span>{{ item.activity }}</span>Activity</span></span>
+													<span class="o-attributeGraph activity" :style="{width: (parseInt(item.activity) / 10 * 100) + '%'}"></span>
+												</div>
+												<div class="o-attributes__item">
+													<span class="heading--xs mobility"><span class="score"><span>{{ item.mobility }}</span>Mobility</span></span>
+													<span class="o-attributeGraph mobility" :style="{width: (parseInt(item.mobility) / 10 * 100) + '%'}"></span>
+												</div>
+												<div class="o-attributes__item">
+													<span class="heading--xs appetite"><span class="score"><span>{{ item.appetite }}</span>Appetite</span></span>
+													<span class="o-attributeGraph appetite" :style="{width: (parseInt(item.appetite) / 10 * 100) + '%'}"></span>
+												</div>
+												<div class="o-attributes__item">
+													<span class="heading--xs stress"><span class="score"><span>{{ item.stress }}</span>Stress</span></span>
+													<span class="o-attributeGraph stress" :style="{width: (parseInt(item.stress) / 10 * 100) + '%'}"></span>
+												</div>
+												<div class="o-attributes__item">
+													<span class="heading--xs pain"><span class="score"><span>{{ item.pain }}</span>Pain</span></span>
+													<span class="o-attributeGraph pain" :style="{width: (parseInt(item.pain) / 10 * 100) + '%'}"></span>
+												</div>
+											</div>
+											<div>
+												<div class="heading--xs">Notes</div>
+												{{ item.notes }}
+											</div>
+										</div>
+										<div class="o-dataEntries--edit">
+											<form>
+												<input name="date" :id="'date' + index" type="hidden" v-model="item.date" />
+												<label :for="'activity' + index" class="o-field o-field--activity">
+													<span class="heading--xs">Activity <em>{{ item.activity }}</em></span>
+													<input name="activity" :id="'activity' + index" type="range" min="0" max="10" v-model="item.activity" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label :for="'mobility' + index" class="o-field o-field--mobility">
+													<span class="heading--xs">Mobility <em>{{ item.mobility }}</em></span>
+													<input name="mobility" :id="'mobility' + index" type="range" min="0" max="10" v-model="item.mobility" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label :for="'appetite' + index" class="o-field o-field--appetite">
+													<span class="heading--xs">Appetite <em>{{ item.appetite }}</em></span>
+													<input name="appetite" :id="'appetite' + index" type="range" min="0" max="10" v-model="item.appetite" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label :for="'stress' + index" class="o-field o-field--stress">
+													<span class="heading--xs">Stress <em>{{ item.stress }}</em></span>
+													<input name="stress" :id="'stress' + index" type="range" min="0" max="10" v-model="item.stress" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label :for="'pain' + index" class="o-field o-field--pain">
+													<span class="heading--xs">Pain <em>{{ item.pain }}</em></span>
+													<input name="pain" :id="'pain' + index" type="range" min="0" max="10" v-model="item.pain" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd" />
+												</label>
+												<label :for="'notes' + index">
+													<span class="heading--xs">Notes</span>
+													<textarea name="notes" :id="'notes' + index" v-model="item.notes" v-on:mousedown="onInputInteractStart" v-on:mouseup="onInputInteractEnd"></textarea>
+												</label>
+											</form>
+										</div>
+									</div>
+									<div v-if="isLoggedIn" class="o-progressCalendar__card--actions" :class="{ 'shift': canEdit }">
+										<div class="o-actions--display">
+											<button v-on:click="editHandler" class="o-btn--primary">
+												<span>Edit</span>
+											</button>
+										</div>
+										<div class="o-actions--edit">
+											<div>
+												<button class="o-btn--primary" v-on:click="updateHandler">
+													<span>Update Record</span>
+												</button>
+												<button class="o-btn--simple m-l-xs" v-on:click="editHandler">
+													<span>&times; Cancel</span>
+												</button>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</record>
+						</slide>
+					</carousel>
+				</div>
+				
+				<settingsmenu ref="settingsmenu" v-if="showSettings" :set-show-settings="setShowSettings" :set-logged-in-settings="setLoggedInSettings" :set-menu-toggle="setMenuToggle" :is-logged-in="isLoggedIn" inline-template>
+					<div class="o-loginOverlay" :class="{ 'animateIn': animateShowSettings }">
+						<div class="o-loginOverlay__bg"></div>
+						<div class="o-loginOverlay__inner">
+							<div class="m-b-sm">
+								<div class="heading--lg m-b-xxs">About the project</div>
+								<div class="body--intro">
+									<p>The Sammy Tracker was cloned from an app I quickly stood-up to follow the health journey of my first, beloved greyhound Penny, after she was diagnosed with brain cancer in 2018.</p>
+									<p>Sammy, also a beloved greyhound, is dealing with her own health struggles awaiting a possibly scary diagnosis. True to the original mission of this app, since Sammy doesn’t tell me much, I looked for a way to track how she felt day-to-day, and gauge her response to all the treatments she’d undergone and medication she’d taken.</p>
+									<p>It’s helped me to see trends that can back up something up I’ve observed or help me calm down because it’s just where she’s at and I’m just over-reacting.</p>
+								</div>
+							</div>
+							<div v-if="!isLoggedIn">
+								<div class="heading--lg m-b-xxs">Editor sign-in</div>
+								<form>
+									<label for="username" class="o-field__settings m-b-xxs" :class="{ 'error': formFields.username.showError }">
+										<input name="username" id="username" type="input" placeholder="Name" v-model="formFields.username.value" style="background: transparent !important;" />
+									</label>
+									<label for="password" class="o-field__settings" :class="{ 'error': formFields.password.showError }">
+										<input name="password" id="password" type="password" placeholder="Password" v-model="formFields.password.value" style="background: transparent !important;" />
+									</label>
+									<button class="o-btn--primary m-t-xs" v-on:click="loginHandler">
+										<span>Login</span>
+									</button>
+								</form>
+								<div :class="{'display': formFields.username.showError || formFields.password.showError}" class="o-loginErrorMsg m-t-xxs">
+									<p class="body--intro error">Please enter valid credentials to sign-in.</p>
+								</div>
+							</div>
+							<div v-if="isLoggedIn">
+								<button class="o-btn--primary m-t-xs" v-on:click="logoutHandler">
+									<span>Logout</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</settingsmenu>
+				
+				<div class="o-appLoader">
+					<div class="o-appLoader__stage1"></div>
+					<div class="o-appLoader__stage2"></div>
+					<div class="o-appLoader__stage3"></div>
+					<div class="o-appLoader__stage4"></div>
+				</div>
+				
+				<footer>
+					<p class="body--tiny">&copy; Jef Mayer <a href="http://jefmayer.com">jefmayer.com</a> / <a href="https://github.com/jefmayer/sammy-daily-health-tracker">Github</a></p>
+				</footer>
+			</div>
+		</main>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"> </script>
+		<script type="text/javascript" src="scripts/vue-carousel.min.js"></script>
+		<script type="text/javascript" src="scripts/app.min.js"></script>
+	</body>
+</html>

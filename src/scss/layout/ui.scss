@@ -1,0 +1,169 @@
+header {
+	width: 100%;
+	height: 135px;
+	background: $xtra-dark;
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	
+	@include breakpoint(sm) {
+		position: relative;
+	}
+	
+	.o-logo {
+		width: 99px;
+		height: 94px;
+		margin: 20px auto 0;
+		background-image: url("../images/sammy-logo.svg");
+		background-position: top left;
+		background-size: cover;
+	}
+	
+	.o-btn--menu {
+		position: relative;
+		width: 32px;
+		height: 32px;
+		float: right;
+		margin-top: -70px;
+		margin-right: 15px;
+		border-radius: 15px;
+		border: 3px solid $green;
+		transition: all 0.25s ease-in-out;
+		overflow: hidden;
+		cursor: pointer;
+		
+		span {
+			display: block;
+			border-radius: 2px;
+			background: $white;
+			transform-origin: center;
+			transition: all 0.25s ease-in-out;
+		}
+		
+		.o-menuBar {
+			width: 12px;
+			height: 1px;
+			margin: 4px auto;
+			
+			&:nth-child(1) {
+				margin-top: 7px;
+				transition-delay: 0.1s;
+			}
+			
+			&:nth-child(2) {
+				transition-delay: 0s;
+			}
+			
+			&:nth-child(3) {
+				transition-delay: 0.1s;
+			}
+		}
+		
+		div {
+			transition: all 0.25s ease-in-out;
+			transform-origin: center;
+			position: absolute;
+			top: 2px;
+			left: 13px;
+			transform: rotate(45deg);
+			
+			span:nth-child(1) {
+				position: absolute;
+				top: 7px;
+				left: 0;
+				width: 15px;
+				height: 1px;
+				transform: scale(0,1);
+			}
+			
+			span:nth-child(2) {
+				position: absolute;
+				top: 0;
+				left: 7px;
+				width: 1px;
+				height: 15px;
+				transform: scale(1,0);
+			}
+		}
+		
+		&:hover {
+			transform: scale(1.05,1.05);
+			background: $green;
+		}
+		
+		&:active {
+			transform: scale(0.95,0.95);
+		}
+		
+		&.closeState {
+			.o-menuBar:nth-child(1) {
+				transition-delay: 0s;
+				transform: scale(0,1) translate(0, 5px);
+			}
+			
+			.o-menuBar:nth-child(2) {
+				transform: scale(0,0);
+				transition-delay: 0.1s;
+			}
+			
+			.o-menuBar:nth-child(3) {
+				transition-delay: 0s;
+				transform: scale(0,1) translate(0, -5px);
+			}
+			
+			div {
+				span:nth-child(1) {
+					transform: scale(1,1);
+					transition-delay: 0.1s;
+				}
+				
+				span:nth-child(2) {
+					transform: scale(1,1);
+					transition-delay: 0.1s;
+				}
+			}
+		}
+	}
+}
+
+main {
+	background: $white;
+}
+
+.o-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vH;
+	position: relative;
+}
+
+footer {
+	background-color: $sand-35;
+	flex: 1;
+	padding: 30px 15px;
+	width: 100%;
+
+	@include breakpoint(sm) {
+		opacity: 0;
+	}
+}
+
+.o-attributesKey {
+	width: 100%;
+	
+	.o-attributesKey__item {
+		width: 20%;
+		float: left;
+		
+		.o-attributesKey__item--inner {
+			padding: 0 15px;
+		}
+	}
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+	color: $green;
+}

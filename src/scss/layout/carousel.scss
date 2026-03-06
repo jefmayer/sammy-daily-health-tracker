@@ -1,0 +1,66 @@
+.VueCarousel-wrapper .VueCarousel-inner {
+	position: relative;
+	min-height: 483px;
+	flex-direction: column;
+		
+	@include breakpoint(sm) {
+		flex-direction: row;
+	}
+}
+
+.VueCarousel-navigation {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	
+	button {
+		transform: none !important;
+		transition: all 0.35s ease-in;
+		opacity: 0 !important;
+		top: -291px !important;
+		width: 50px;
+		height: 0;
+		padding: 100px 0 0 !important;
+		overflow: hidden;
+		
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100px;
+			height: 100px;
+			background-color: $dark-15 !important;
+			background-repeat: no-repeat;
+			border-radius: 50px;
+		}
+	}
+	
+	.VueCarousel-navigation-prev {
+		&::before {
+			right: 5px;
+			left: auto;
+			background-image: url("../images/left-arrow.svg");
+			background-position: 60px center;
+		}
+	}
+	
+	.VueCarousel-navigation-next {
+		&::before {
+			left: 5px;
+			background-image: url("../images/right-arrow.svg");
+			background-position: 17px center;
+		}
+	}
+}
+
+.VueCarousel:hover {
+	.VueCarousel-navigation button {
+		opacity: 1 !important;
+	}
+	
+	.VueCarousel-navigation button.VueCarousel-navigation--disabled {
+		opacity: 0 !important;
+	}
+}
