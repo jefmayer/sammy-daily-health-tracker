@@ -2,7 +2,7 @@ name: Build and Deploy Sammy Daily Health Tracker
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build-and-push:
