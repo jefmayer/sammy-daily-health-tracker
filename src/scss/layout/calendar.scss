@@ -275,6 +275,10 @@
 	
 	.o-progressCalendar__card--inner {
 		padding-top: 15px;
+
+		.o-dataEntries--display {
+			padding-bottom: 0;
+		}
 	}
 	
 	.o-dataEntries--display {

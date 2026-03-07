@@ -167,7 +167,6 @@ var app = new Vue({
 		this.newRecord.date = this.getTodaysFormattedDate();
 		this.getData();
 		window.addEventListener('resize', function() {
-			console.log(app.$refs.carousel.currentPerPage);
 			if (that.prevCalPageCt === 0 && app.$refs.carousel.currentPerPage > 0) {
 				app.$refs.carousel.goToPage(0)
 			}
