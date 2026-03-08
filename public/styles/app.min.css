@@ -1507,6 +1507,7 @@ textarea {
     transition: all 0.15s ease-in 0.75s;
   }
   #app .o-progressCalendar {
+    background: #fff;
     opacity: 0;
     height: 0;
     overflow: hidden;
@@ -1592,8 +1593,10 @@ textarea {
   background-position: 17px center;
 }
 
-.VueCarousel:hover .VueCarousel-navigation button {
-  opacity: 1 !important;
+@media (min-width: 550px) {
+  .VueCarousel:hover .VueCarousel-navigation button {
+    opacity: 1 !important;
+  }
 }
 .VueCarousel:hover .VueCarousel-navigation button.VueCarousel-navigation--disabled {
   opacity: 0 !important;

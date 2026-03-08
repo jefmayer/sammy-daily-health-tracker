@@ -1,12 +1,3 @@
-// http://bl.ocks.org/hunzy/11110940
-// https://bl.ocks.org/josiahdavis/7a02e811360ff00c4eef
-// Auto-generated ticks
-// - http://www.tothenew.com/blog/adjust-time-scale-representation-on-x-axis/
-// Zoom
-// - http://bl.ocks.org/oluckyman/6199145
-// - https://bl.ocks.org/mbostock/1071269
-// http://bl.ocks.org/eric-bunch/0bdef4942ac085a93fa6bd31452cd55c
-
 export default Vue.component('chart', {
 	props: ['dataLoaded', 'slideCarouselToDate'],
 	data: function() {
@@ -17,19 +8,16 @@ export default Vue.component('chart', {
 	},
 	methods: {
 		update: function(data) {
-			// Format data for chart
 			this.chartData = [];
 			this.formatChartData(data);
 			
-			var that = this,
-					svg = Object,
-					margin = {
-						top: 20,
-						right: 25,
-						bottom: 0,
-						left: 25
-					};
-						
+			var that = this;
+			var margin = {
+				top: 20,
+				right: 25,
+				bottom: 0,
+				left: 25
+			};
 			var parseTime = d3.time.format('%b-%d-%Y');
 			
 			var getWidth = function() {
@@ -65,23 +53,32 @@ export default Vue.component('chart', {
 				.interpolate('cardinal')
 				.x(function(d) { return xScale(d['date']); })
 				.y(function(d) { return yScale(d['attribute']); });		
-						
-			// If chart elements have been added...
-			if (this.chartAdded) {
-				// Update x-axis
-				svg = d3.select('#progressChart');	
-				svg.select('.o-axis--x').call(xAxis);
-				// Update lines
+			
+			var svg = d3.select('#progressChart')
+				.attr('width', width + margin.left + margin.right)
+				.attr('height', height)
+				.append('g')
+				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+			
+			var updateXAxis = function() {
+				var width = getWidth();									
+				// Update the range of the scale with new width/height
+				xScale.range([0, width]);
+				// Update the axis and text with the new scale
+				svg.select('.o-axis--x')
+					.attr('transform', 'translate(0,' + height + ')')
+					.call(xAxis);
+				// Force D3 to recalculate and update the line
 				svg.selectAll('.o-line')
-					.data(this.chartData)
-					.attr('d', function(d) {return line(d.datapoints); })
+					.attr('d', function(d) { return line(d.datapoints); });
+				// Update the tick marks
+				xAxis.ticks(that.getDatesAtInterval);
+			};
+
+			// If chart has already been added then we only want to update x-axis?
+			if (this.chartAdded) {
+				updateXAxis();
 			} else {
-				// Define svg canvas
-				svg = d3.select('#progressChart')
-					.attr('width', width + margin.left + margin.right)
-					.attr('height', height)
-					.append('g')
-					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 				// Add x-axis
 				svg.append('g')
 					.attr('class', 'o-axis--x')
@@ -163,27 +160,11 @@ export default Vue.component('chart', {
 						var formatDate = d3.time.format('%Y-%m-%d')
 						that.slideCarouselToDate(formatDate(xScale.invert(d3.mouse(this)[0])));
 					});
-									
-				var resize = function() {
-					var width = getWidth();									
-					// Update the range of the scale with new width/height
-					xScale.range([0, width]);
-					// Update the axis and text with the new scale
-					svg.select('.o-axis--x')
-						.attr('transform', 'translate(0,' + height + ')')
-						.call(xAxis);
-					// Force D3 to recalculate and update the line
-					svg.selectAll('.o-line')
-						.attr('d', function(d) { return line(d.datapoints); });
-					// Update the tick marks
-					xAxis.ticks(that.getDatesAtInterval);
-					// xAxis.ticks(Math.max(width/75, 2));
-				};
-				
-				d3.select(window).on('resize', resize);
-				resize();
+				d3.select(window).on('resize', updateXAxis);
+				updateXAxis();
+				// Why is this timeout here...
 				setTimeout(function() {
-					resize();
+					updateXAxis();
 				}, 100);
 				// Set chart added flag
 				this.chartAdded = true;

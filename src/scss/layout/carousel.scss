@@ -57,7 +57,10 @@
 
 .VueCarousel:hover {
 	.VueCarousel-navigation button {
-		opacity: 1 !important;
+
+		@include breakpoint(sm) {
+			opacity: 1 !important;
+		}
 	}
 	
 	.VueCarousel-navigation button.VueCarousel-navigation--disabled {

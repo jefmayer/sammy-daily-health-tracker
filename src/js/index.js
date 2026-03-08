@@ -66,7 +66,6 @@ var app = new Vue({
 					// Update pageCt
 					that.prevCalPageCt = app.$refs.carousel.currentPerPage;
         } else {
-        	console.log(request.responseText);
         	console.warn('index.js, getRecords : error');
         }
 			}

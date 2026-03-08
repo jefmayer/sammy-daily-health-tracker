@@ -40,7 +40,6 @@ export default Vue.component('record', {
 			request.onload = function() {
 				if (request.status >= 200 && request.status < 400) {
 					that.requesting = false;
-					// console.log(JSON.parse(request.responseText));
 					that.canEdit = !that.canEdit;
 					if (that.addNew) {
 						that.reset();
@@ -49,7 +48,6 @@ export default Vue.component('record', {
 						that.update();
 					}, 250);
         } else {
-        	console.log(request.responseText);
         	console.warn('vue-record.js, addRecord : error');
         }
 			}

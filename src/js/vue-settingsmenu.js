@@ -50,8 +50,6 @@ export default Vue.component('settingsmenu', {
 				if (request.status >= 200 && request.status < 400) {
 					that.requesting = false;
 					var data = JSON.parse(request.responseText);
-					console.log(data[0]);
-					console.log(data[0].success);
 					if (data[0].success === 'success') {
 						that.setLoggedInSettings(true);
 						// Persist session in local storage
@@ -63,7 +61,6 @@ export default Vue.component('settingsmenu', {
 						that.formFields.password.showError = true;
 					}
         } else {
-        	console.log(request.responseText);
         	console.warn('vue-settingsmenu.js, login : error');
         }
 			}
