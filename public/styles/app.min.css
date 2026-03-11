@@ -1151,27 +1151,29 @@ a:active {
 }
 
 .o-progressCalendar__card {
-  position: relative;
   background: #fff;
   border-bottom: 1px solid rgba(35, 39, 54, 0.5);
-  overflow: hidden;
+  position: relative;
   transition: all 0.25s ease-in;
   transform: translateY(0);
-  min-height: 560px;
 }
 @media (min-width: 550px) {
   .o-progressCalendar__card {
     border-bottom: none;
     border-right: 1px solid rgba(35, 39, 54, 0.5);
-    min-height: 0;
+    overflow: hidden;
   }
 }
 .o-progressCalendar__card .o-progressCalendar__card--inner {
   height: 100%;
-  padding: 15px;
-  padding-top: 0;
+  padding: 0 15px 50px;
   transition: all 0.25s ease-in;
   transform: translateX(0);
+}
+@media (min-width: 550px) {
+  .o-progressCalendar__card .o-progressCalendar__card--inner {
+    padding: 0 15px 25px;
+  }
 }
 .o-progressCalendar__card .o-progressCalendar__card--inner.shift {
   transform: translateX(-100%);
