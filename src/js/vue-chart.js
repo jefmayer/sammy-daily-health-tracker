@@ -96,7 +96,7 @@ export default Vue.component('chart', {
 						}
 					});
 				// Add line attributes
-				var lines = svg.selectAll('.o-line')
+				svg.selectAll('.o-line')
 					.data(this.chartData)
 					.enter()
 					.append('path')
