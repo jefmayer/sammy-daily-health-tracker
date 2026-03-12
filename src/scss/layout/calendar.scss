@@ -7,33 +7,23 @@
 	background: $white;
 	border-bottom: 1px solid $dark-50;
 	position: relative;
-	transition: all 0.25s ease-in;
+	transition: transform 0.25s ease-in;
 	transform: translateY(0);
-	
+	will-change: transform;
 	
 	@include breakpoint(sm) {
 		border-bottom: none;
 		border-right: 1px solid $dark-50;
+		min-height: 490px;
 		overflow: hidden;
 	}
-	
+
 	.o-progressCalendar__card--inner {
 		height: 100%;
-		padding: 0 15px 50px;
-		transition: all 0.25s ease-in;
+		padding: 0 15px 25px;
+		transition: transform 0.25s ease-in;
 		transform: translateX(0);
-
-		@include breakpoint(sm) {
-			padding: 0 15px 25px;
-		}
-
-		&.shift {	
-			transform: translateX(-100%);
-		}
-	}
-	
-	&.slideUp {
-		transform: translateY(-15px);
+		will-change: transform;
 	}
 	
 	.o-progressCalendar__card--actions {
@@ -41,22 +31,49 @@
 		bottom: 0;
 		width: 100%;
 		padding: 15px;
-		transition: all 0.25s ease-in;
+		transition: transform 0.25s ease-in;
 		transform: translateX(0);
-		
-		&.shift {	
+		will-change: transform;
+	}
+
+	&.slideUp {
+		transform: translateY(-15px);
+	}
+
+	.shift {
+
+		@include breakpoint(sm) {
 			transform: translateX(-100%);
 		}
-		
-		.o-actions--edit {
-			position: absolute;
-			top: 0; // offset
-			left: 0;
-			width: 100%;
-			padding: 15px;
-			transition: all 0.25s ease-in-out;
-			transform: translateX(100%);
+
+		.o-dataEntries--display {
+			display: none;
+
+			@include breakpoint(sm) {
+				display: flex;
+			}
 		}
+
+		.o-dataEntries--edit {
+			display: block;
+		}
+
+		.o-actions--display {
+			display: none;
+
+			@include breakpoint(sm) {
+				display: block;
+			}
+		}
+
+		.o-actions--edit {
+			display: block;
+		}
+	}
+
+	form {
+		width: 100%;
+		margin: 0 auto;
 	}
 	
 	.o-date {
@@ -221,36 +238,46 @@
 			}
 		}
 	}
+
+	.o-dataEntries--display {
+		display: flex;
+		flex-direction: column;
+	}
 	
 	.o-dataEntries--edit {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
+		display: none;
 		height: 100%;
-		padding: 15px;
-		transition: all 0.25s ease-in-out;
-		transform: translateX(100%);
+		width: 100%;
 		
-		form {
-			width: 100%;
-			margin: 0 auto;
+		@include breakpoint(sm) {
+			display: block;
+			left: 0;
+			padding: 15px;
+			position: absolute;
+			top: 0;
+			transform: translateX(100%);
+			transition: transform 0.25s ease-in-out;
+			will-change: transform;
 		}
 	}
-}
 
-.o-progressCalendar__card {
-	.o-progressCalendar__card--actions {
-		.o-actions--edit {
-			div {
-				width: 100%;
-				max-width: 225px;
-				margin: 0 auto;
-				
-				@include breakpoint(sm) {
-					max-width: 300px;
-				}
-			}
+	.o-actions--display {
+		display: block;
+	}
+
+	.o-actions--edit {
+		display: none;
+		width: 100%;
+
+		@include breakpoint(sm) {
+			display: block;
+			left: 0;
+			padding: 15px;
+			position: absolute;
+			top: 0;
+			transform: translateX(100%);
+			transition: transform 0.25s ease-in-out;
+			will-change: transform;
 		}
 	}
 }
@@ -263,8 +290,9 @@
 	background-image: url("../images/bg.jpg");
 	background-position: center center;
 	background-size: cover;
-	position: relative;
 	border-bottom: none;
+	min-height: 400px;
+	position: relative;
 	
 	.o-progressCalendar__card--wrapper {
 		position: absolute;
@@ -275,18 +303,15 @@
 	}
 	
 	.o-progressCalendar__card--inner {
-		padding-top: 15px;
-
-		.o-dataEntries--display {
-			padding-bottom: 0;
-		}
+		padding: 15px;
 	}
 	
 	.o-dataEntries--display {
-		display: flex;
 		align-items: center;
-		height: 100%;
 		border: 4px solid white;
+		flex-direction: row;
+		height: 100%;
+		padding-bottom: 0;
 	}
 	
 	.o-dataEntries--edit {
@@ -379,20 +404,23 @@ input {
 
 textarea {
 	width: 100%;
-	height: 9em;
-	padding: 5px;
+	height: 16em;
+	padding: 5px 8px;
 	border: 1px solid $sand;
 	font-family: $mon !important;
 	font-size: 12px;
 }
 
-.loggedIn{
-	.o-dataEntries--display {
-		padding-bottom: 60px;
+.loggedIn {
+
+	.o-progressCalendar__card:not(.o-progressCalendar__card--newEntry) {
+
+		.o-progressCalendar__card--inner {
+			padding-bottom: 65px;
+		}
 	}
 }
 
-// Active state
 .o-progressCalendar__card.focus {
 	.o-date::before {
 		transform: scale(1,1);
